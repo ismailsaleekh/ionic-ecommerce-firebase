@@ -20,6 +20,30 @@
       <ion-label floating>Product Name: </ion-label>
       <ion-input type="text" [(ngModel)]="product.name"></ion-input>
     </ion-item>
+
+    <ion-item>
+      <ion-label floating>Author:</ion-label>
+      <ion-select [(ngModel)]="product.author">
+        <ion-option *ngFor="let author of authors">
+          {{author}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Genre:</ion-label>
+      <ion-select [(ngModel)]="product.genre"
+                  multiple="true">
+        <ion-option *ngFor="let genre of genres">
+          {{genre}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Published year:</ion-label>
+      <ion-input type="number" [(ngModel)]="product.year"></ion-input>
+    </ion-item>
   
     <ion-item>
       <ion-label floating>Description: </ion-label>

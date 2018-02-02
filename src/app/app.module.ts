@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFireDatabaseModule } from "angularfire2/database";
+import { IonicStorageModule } from "@ionic/storage";
 
 
 import { MyApp } from './app.component';
@@ -19,6 +20,7 @@ import { AddProductPage } from '../pages/add-product/add-product';
 import { CartProvider } from '../providers/cart/cart';
 import { LoginPage } from '../pages/login/login';
 import { UserProvider } from '../providers/user/user';
+import { StorageProvider } from '../providers/storage/storage';
 
 const firebaseConfig = {
   apiKey: "AIzaSyARGzZ4hTAQQQ8bD4sZjuarzyawVPlRXAY",
@@ -39,7 +41,6 @@ const firebaseConfig = {
     ProfilePage,
     AddProductPage,
     LoginPage
-
   ],
   imports: [
     BrowserModule,
@@ -47,6 +48,7 @@ const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -65,6 +67,7 @@ const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CartProvider,
     UserProvider,
+    StorageProvider,
   ]
 })
 export class AppModule {}
