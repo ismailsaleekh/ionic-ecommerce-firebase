@@ -4,6 +4,7 @@ import { AddProductPage } from '../add-product/add-product';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { CartProvider } from '../../providers/cart/cart';
 import { LoginPage } from '../login/login';
+import { StorageProvider } from '../../providers/storage/storage';
 
 @Component({
   selector: 'page-home',
@@ -11,11 +12,16 @@ import { LoginPage } from '../login/login';
 })
 export class HomePage implements OnInit{
 
+  search
   products: any[] = []
   constructor(public navCtrl: NavController,
               public db: AngularFireDatabase,
-              public cart: CartProvider            
-  ){}
+              public cart: CartProvider,
+              public storeProvider: StorageProvider,
+  ){
+    this.storeProvider.setAuthors()
+    this.storeProvider.setGenres()
+  }
 
   ngOnInit() {
     this.fetch()
@@ -47,5 +53,12 @@ export class HomePage implements OnInit{
       })
       console.log(this.products)
     })
+  }
+  onChange(event){
+    console.log('onchange', event)
+    console.log('search', this.search)
+  }
+  onCancel(event){
+    console.log('onClear', event)
   }
 }

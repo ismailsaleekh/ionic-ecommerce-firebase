@@ -5,7 +5,13 @@
           <ion-icon name="menu"></ion-icon>
         </button>
       </ion-buttons>
-      <ion-title>Home</ion-title>
+      <ion-searchbar [(ngModel)]="search"
+                     [showCancelButton]="true"
+                     (ionInput)="onChange($event)"
+                     (ionCancel)="onCancel($event)"
+                     animated="true"
+                     debounce="1000">
+      </ion-searchbar>
       <ion-buttons end>
         <button ion-button icon-only color="royal" (click)="goto('LoginPage')">
           <ion-icon name="log-in"></ion-icon>
@@ -15,27 +21,31 @@
 </ion-header>
 
 <ion-content padding>
-  
-  <div *ngFor="let product of products">  
-    <ion-card>
-        <ion-card-header>
-          {{product.name}}
-        </ion-card-header>
-        <ion-list>
-          <p padding>
-          {{product.description}}
-          </p>
-          <p padding>
-            {{product.price}}
-          </p>
-          <button ion-item
-                  (click)="addToCart(product.name, product.description, product.price)">
-            <ion-icon name="cart"></ion-icon>
-            Add to cart
-          </button>
-        </ion-list>
-      </ion-card>
-    </div>
+  <div padding>
+    <ion-slides slidesPerView="3" 
+                centeredSlides="true"
+                spaceBetween="15">
+      <ion-slide *ngFor="let product of products">
+        <div class="slide">
+          <ion-img src="../../assets/imgs/logo.png"></ion-img>
+            <!-- {{product.name}}
+
+              <p padding>
+              {{product.description}}
+              </p>
+
+              <p padding>
+              {{product.price}}
+              </p>
+
+              <button ion-item (click)="addToCart(product.name, product.description, product.price)">
+                <ion-icon name="cart"></ion-icon>
+                Add to cart
+              </button> -->
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
   <button ion-button secondary (click)="goto('AddProductPage')">Add Product</button>
     
 </ion-content>
