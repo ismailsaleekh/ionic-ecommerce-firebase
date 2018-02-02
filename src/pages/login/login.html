@@ -1,25 +1,23 @@
 
-<ion-header>
+<ion-content class="card-background-page">
 
-  <ion-navbar>
-    <ion-title>login</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
-  <button ion-button icon-left round>
-    <ion-icon name="facebook"></ion-icon>
-    Facebook
-  </button>
-  <button ion-button icon-left round (click)="google()">
-    <ion-icon name="google"></ion-icon>
-    Google
-  </button>
-  <button ion-button icon-left round>
-    <ion-icon name="twitter"></ion-icon>
-    Twitter
-  </button>
+  <ion-card>
+    <img src="../../assets/imgs/background.jpg">
+    <div class="card-title">Book Store</div>
+    <div class="card-substitute">
+      <button ion-button icon-left round>
+        <ion-icon name="facebook"></ion-icon>
+        Facebook
+      </button>
+      <button ion-button icon-left round (click)="google()">
+        <ion-icon name="google"></ion-icon>
+        Google
+      </button>
+      <button ion-button icon-left round>
+        <ion-icon name="twitter"></ion-icon>
+        Twitter
+      </button>
+    </div>
+  </ion-card>
+ 
 </ion-content>

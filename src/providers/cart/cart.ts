@@ -12,7 +12,10 @@ export class CartProvider {
   cartList: any[] = []
 
   constructor() {
-    console.log('Hello CartProvider Provider');
+  }
+
+  async AddToCart(product){
+    this.cartList.push(product)
   }
 
 }
