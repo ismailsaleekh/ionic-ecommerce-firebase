@@ -31,6 +31,7 @@ export class DbProvider {
   }
 
   async fetchGenres(){
+    this.genres = []
     this.db.list('/genres/').snapshotChanges().subscribe((data:any)=>{
       data.forEach(element => {
         this.genres.push(element.payload.val().genreName)
@@ -39,6 +40,7 @@ export class DbProvider {
     return this.genres
   }
   async fetchAuthors(){
+    this.authors = []
     this.db.list('/authors/').snapshotChanges().subscribe((data:any)=>{
       data.forEach(element => {
         this.authors.push(element.payload.val().authorName)
