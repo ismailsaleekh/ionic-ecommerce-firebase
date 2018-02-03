@@ -27,21 +27,10 @@
                 spaceBetween="15">
       <ion-slide *ngFor="let product of products">
         <div class="slide">
-          <ion-img src="../../assets/imgs/logo.png"></ion-img>
-            <!-- {{product.name}}
-
-              <p padding>
-              {{product.description}}
-              </p>
-
-              <p padding>
-              {{product.price}}
-              </p>
-
               <button ion-item (click)="addToCart(product.name, product.description, product.price)">
                 <ion-icon name="cart"></ion-icon>
-                Add to cart
-              </button> -->
+                {{product.name}}
+              </button>
         </div>
       </ion-slide>
     </ion-slides>

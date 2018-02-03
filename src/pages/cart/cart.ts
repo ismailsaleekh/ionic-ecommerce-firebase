@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { CartProvider } from '../../providers/cart/cart';
 
 
@@ -8,38 +8,41 @@ import { CartProvider } from '../../providers/cart/cart';
   selector: 'page-cart',
   templateUrl: 'cart.html',
 })
-export class CartPage implements OnInit {
+export class CartPage {
 
   cartList: any[] = []
   totalSum = 0
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public cart: CartProvider
+              public cart: CartProvider,
+              public events: Events
             ) {
-              this.fetchList()
             }
 
   ionViewDidEnter() {
-    
+    this.fetchList()
   }
 
   fetchList(){
     this.cartList = this.cart.cartList
-    this.cartList.forEach(item=>{
-      this.totalSum = +this.totalSum + +item.price
-    })
-    console.log('method worked')
-  }
-  ngOnInit(){
-    console.log('oninit')
+    this.changeSum()
   }
 
   remove(item){
-    this.cartList = this.cart.cartList.filter(cart=>{
+    this.cart.cartList = this.cart.cartList.filter(cart=>{
       return cart !== item
     })
+    this.fetchList()
+    this.changeSum()
+    this.events.publish('cart:removed', this.cartList.length)
   }
   checkout(item){
     this.remove(item)
+  }
+  changeSum(){
+    this.totalSum = 0
+    this.cartList.forEach(element => {
+     this.totalSum = +this.totalSum + +element.price
+    });
   }
 }

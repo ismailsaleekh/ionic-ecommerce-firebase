@@ -5,7 +5,7 @@ import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFireDatabaseModule } from "angularfire2/database";
 import { IonicStorageModule } from "@ionic/storage";
-
+import { AngularFireStorageModule } from "angularfire2/storage";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -49,7 +49,8 @@ const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    AngularFireStorageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

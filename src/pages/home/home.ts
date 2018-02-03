@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
 import { AddProductPage } from '../add-product/add-product';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { CartProvider } from '../../providers/cart/cart';
@@ -19,7 +19,8 @@ export class HomePage implements OnInit{
               public db: AngularFireDatabase,
               public cart: CartProvider,
               public storeProvider: StorageProvider,
-              public dbProvider: DbProvider
+              public dbProvider: DbProvider,
+              public events: Events
   ){}
 
   ngOnInit() {
@@ -36,7 +37,7 @@ export class HomePage implements OnInit{
       price
     }
     this.cart.cartList.push(product)
-    console.log(this.cart.cartList)
+    this.events.publish('cart:added', this.cart.cartList.length)
   }
 
   fetch(){
