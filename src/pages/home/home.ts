@@ -5,6 +5,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { CartProvider } from '../../providers/cart/cart';
 import { LoginPage } from '../login/login';
 import { StorageProvider } from '../../providers/storage/storage';
+import { DbProvider } from '../../providers/db/db';
 
 @Component({
   selector: 'page-home',
@@ -18,10 +19,8 @@ export class HomePage implements OnInit{
               public db: AngularFireDatabase,
               public cart: CartProvider,
               public storeProvider: StorageProvider,
-  ){
-    this.storeProvider.setAuthors()
-    this.storeProvider.setGenres()
-  }
+              public dbProvider: DbProvider
+  ){}
 
   ngOnInit() {
     this.fetch()
@@ -41,17 +40,8 @@ export class HomePage implements OnInit{
   }
 
   fetch(){
-    this.db.list('/products/').snapshotChanges().subscribe((data:any)=>{
-        data.forEach(product=>{
-          let pr = {
-            key: product.key,
-            name: product.payload.val().name,
-            description: product.payload.val().description,
-            price: product.payload.val().price
-          }
-        this.products.push(pr)
-      })
-      console.log(this.products)
+    this.dbProvider.fetchProducts().then(data=>{
+      this.products = this.dbProvider.products
     })
   }
   onChange(event){

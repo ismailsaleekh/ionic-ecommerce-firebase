@@ -21,6 +21,7 @@ import { CartProvider } from '../providers/cart/cart';
 import { LoginPage } from '../pages/login/login';
 import { UserProvider } from '../providers/user/user';
 import { StorageProvider } from '../providers/storage/storage';
+import { DbProvider } from '../providers/db/db';
 
 const firebaseConfig = {
   apiKey: "AIzaSyARGzZ4hTAQQQ8bD4sZjuarzyawVPlRXAY",
@@ -68,6 +69,7 @@ const firebaseConfig = {
     CartProvider,
     UserProvider,
     StorageProvider,
+    DbProvider,
   ]
 })
 export class AppModule {}
