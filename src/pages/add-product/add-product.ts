@@ -4,6 +4,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Storage } from '@ionic/storage';
 import { StorageProvider } from '../../providers/storage/storage';
 import { DbProvider } from '../../providers/db/db';
+import { AngularFireStorage } from 'angularfire2/storage';
 
 @IonicPage()
 @Component({
@@ -22,7 +23,8 @@ export class AddProductPage {
               public storage: Storage,
               public alertCtrl: AlertController,
               public storeProvider: StorageProvider,
-              public dbProvider: DbProvider
+              public dbProvider: DbProvider,
+              public cloud: AngularFireStorage
             ){
               this.getValues()
             }
