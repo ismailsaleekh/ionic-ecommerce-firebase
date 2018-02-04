@@ -17,7 +17,13 @@ export class DbProvider {
           key: product.key,
           name: product.payload.val().name,
           description: product.payload.val().description,
-          price: product.payload.val().price
+          price: product.payload.val().price,
+          addedTime: product.payload.val().addedTime,
+          author: product.payload.val().author,
+          coverURL: product.payload.val().coverUrl,
+          language: product.payload.val().language,
+          year: product.payload.val().year,
+          genre: product.payload.val().genre
         }
       this.products.push(pr)
       })
@@ -30,6 +36,7 @@ export class DbProvider {
       data.forEach(element => {
         this.genres.push(element.payload.val().genreName)
       });
+      console.log('provider', this.genres)
     })
     return this.genres
   }

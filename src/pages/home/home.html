@@ -24,15 +24,12 @@
 
 <ion-content padding>
   <div padding>
-    <ion-slides slidesPerView="3" 
-                centeredSlides="true"
-                spaceBetween="15">
-      <ion-slide *ngFor="let product of products">
+    <ion-slides slidesPerView="4" 
+                spaceBetween="10"
+                initialSlide="3">
+      <ion-slide *ngFor="let genre of genres">
         <div class="slide">
-              <button ion-item (click)="addToCart(product.name, product.description, product.price)">
-                <ion-icon name="cart"></ion-icon>
-                {{product.name}}
-              </button>
+          <button ion-button color="secondary" round (click)="getByGenre(genre)">{{genre}}</button>
         </div>
       </ion-slide>
     </ion-slides>
@@ -47,3 +44,10 @@
         <ion-icon name="log-in"></ion-icon>
       </button>
 </ng-template>
+
+
+
+<!-- <button ion-item (click)="addToCart(product.name, product.description, product.price)">
+    <ion-icon name="cart"></ion-icon>
+    {{product.name}}
+  </button> -->
