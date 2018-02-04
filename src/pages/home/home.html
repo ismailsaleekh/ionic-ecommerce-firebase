@@ -13,9 +13,11 @@
                      debounce="1000">
       </ion-searchbar>
       <ion-buttons end>
-        <button ion-button icon-only color="royal" (click)="goto('LoginPage')">
-          <ion-icon name="log-in"></ion-icon>
-        </button>
+        <div *ngIf="auth.authState | async as user; else showBtn" class="avatar">
+            <ion-avatar item-end>
+                <img src={{user.photoURL}} (click)="profile()">
+              </ion-avatar>
+        </div>
       </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -38,3 +40,10 @@
   <button ion-button secondary (click)="goto('AddProductPage')">Add Product</button>
     
 </ion-content>
+
+
+<ng-template #showBtn>
+    <button ion-button icon-only color="royal" (click)="goto('LoginPage')">
+        <ion-icon name="log-in"></ion-icon>
+      </button>
+</ng-template>

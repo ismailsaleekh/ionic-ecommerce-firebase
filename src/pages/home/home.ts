@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
 import { AddProductPage } from '../add-product/add-product';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -6,12 +6,14 @@ import { CartProvider } from '../../providers/cart/cart';
 import { LoginPage } from '../login/login';
 import { StorageProvider } from '../../providers/storage/storage';
 import { DbProvider } from '../../providers/db/db';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { ProfilePage } from '../profile/profile';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage implements OnInit{
+export class HomePage {
 
   search
   products: any[] = []
@@ -20,11 +22,17 @@ export class HomePage implements OnInit{
               public cart: CartProvider,
               public storeProvider: StorageProvider,
               public dbProvider: DbProvider,
-              public events: Events
+              public events: Events,
+              public auth: AngularFireAuth
   ){}
 
-  ngOnInit() {
+  ionViewDidEnter(){
     this.fetch()
+    this.auth.authState.subscribe((data:any)=>{
+      if(data) this.storeProvider.setUser({name: data.displayName, 
+                                           email: data.email,
+                                           photo: data.photoURL})
+    })
   }
   goto(page){
     if(page == 'LoginPage')this.navCtrl.push(LoginPage)
@@ -51,5 +59,8 @@ export class HomePage implements OnInit{
   }
   onCancel(event){
     console.log('onClear', event)
+  }
+  profile(){
+    this.navCtrl.push(ProfilePage)
   }
 }

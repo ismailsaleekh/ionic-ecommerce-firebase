@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Storage } from '@ionic/storage';
+import { LoginPage } from '../login/login';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @IonicPage()
 @Component({
@@ -15,11 +11,27 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ProfilePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  user: {} = {}
+
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public storage: Storage,
+              public auth: AngularFireAuth
+            ) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
+    this.isAuth()
   }
-
+  logout(){
+    this.auth.auth.signOut().then(data=>{
+      this.storage.set('user', null)
+    })
+    this.isAuth()
+  }
+  isAuth(){
+    this.storage.get('user').then((data: any)=>{
+      if(data) this.user = data
+      else this.navCtrl.push(LoginPage)
+    })
+  }
 }

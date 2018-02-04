@@ -25,12 +25,27 @@ export class LoginPage {
 
   google(){
     this.auth.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider())
-      .then(({name: displayName, email: email, photoURL: photo})=>{
-        console.log(name, email, photo)
+    .then((data:any)=>{
+      this.userProvider.user = {
+        name : data.user.displayName,
+        email: data.user.email,
+        photo: data.user.photoURL
+      }
+      console.log(this.userProvider.user)
+    })
+  }
+  facebook(){
+    this.auth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+      .then((data:any)=>{
         this.userProvider.user = {
-          name, email, photo
+          name : data.user.displayName,
+          email: data.user.email,
+          photo: data.user.photoURL
         }
         console.log(this.userProvider.user)
+      })
+      .catch(err=>{
+        console.info('error', err)
       })
   }
 
