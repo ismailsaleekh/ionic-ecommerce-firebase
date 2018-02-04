@@ -16,6 +16,8 @@ export class AddProductPage {
   product: {} = {}
   authors: string[] = []
   genres: string[] = []
+  languages: string[] = ['Uzbek', 'Russian', 'English', 'Foreign']
+  bookCover
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -26,15 +28,31 @@ export class AddProductPage {
               public dbProvider: DbProvider,
               public cloud: AngularFireStorage
             ){
-              this.getValues()
             }
 
   ionViewDidLoad() {
+    this.getValues()    
+    console.log(this.languages)
   }
   add(product){
     product.addedTime = Date.now()
-    this.db.list('/products/').push(product)
-    this.product = {}
+    const filePath = `${product.name}_Cover`
+    product.language = product.language.trim()
+    product.author = product.author.trim()
+    product.genre = product.genre.map(pr=>{
+      return pr = pr.trim()
+    })
+    this.cloud.upload(filePath, this.bookCover).then((data:any)=>{
+      product.coverUrl = data.metadata.downloadURLs[0]
+      console.log(product)
+    }).then((data)=>{
+      console.log(product)
+      this.db.list('/products/').push(product).then(()=>{
+        product = {}
+        this.product = {}
+      })      
+    })    
+    
   }
 
   authorsAlert(){
@@ -113,6 +131,13 @@ export class AddProductPage {
     this.dbProvider.fetchGenres().then(data=>{
       this.authors = this.dbProvider.authors
     })
+  }
+
+  fileUpload(event){
+    this.bookCover = event[0]
+  }
+  getLang(lang){
+    console.log('lang is', lang)
   }
 
 }

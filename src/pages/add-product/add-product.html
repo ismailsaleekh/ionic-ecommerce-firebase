@@ -42,7 +42,16 @@
 
     <ion-item>
       <ion-label fixed>Cover of book: </ion-label>
-      <ion-input type="file" ></ion-input>
+      <ion-input type="file" (change)="fileUpload($event.target.files)" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Language:</ion-label>
+      <ion-select [(ngModel)]="product.language">
+        <ion-option *ngFor="let lang of languages">
+          <p>{{lang}}</p>
+        </ion-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>
