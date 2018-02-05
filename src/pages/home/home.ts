@@ -8,6 +8,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 import { DbProvider } from '../../providers/db/db';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ProfilePage } from '../profile/profile';
+import { ProductPage } from '../product/product';
 
 @Component({
   selector: 'page-home',
@@ -18,6 +19,11 @@ export class HomePage {
   search
   products: any[] = []
   genres: string[] = []
+  newestBooks: object[] = []
+  uzbBooks: object[] = []
+  rusBooks: object[] = []
+  engBooks: object[] = []
+  foreignBooks: object[] = []
   constructor(public navCtrl: NavController,
               public db: AngularFireDatabase,
               public cart: CartProvider,
@@ -49,13 +55,22 @@ export class HomePage {
     this.events.publish('cart:added', this.cart.cartList.length)
   }
 
-  fetch(){
+  async fetch(){
     this.dbProvider.fetchProducts().then(data=>{
       this.products = this.dbProvider.products
+      this.events.subscribe('byLang', (uzb, rus, eng, foreign)=>{
+        this.uzbBooks = uzb
+        this.rusBooks = rus
+        this.engBooks = eng
+        this.foreignBooks = foreign
+        console.log('rus', this.rusBooks)
+      })
+      this.events.subscribe('lastAdded', (newest)=>{
+        this.newestBooks = newest
+      })
     })
     this.dbProvider.fetchGenres().then(data=>{
       this.genres = this.dbProvider.genres
-      console.log('genres', this.genres)
     })
   }
   onChange(event){
@@ -69,31 +84,18 @@ export class HomePage {
     this.navCtrl.push(ProfilePage)
   }
   getByGenre(genre){
-    console.log('clicked', genre)
+    console.log('clicked', genre) 
     let booksByGenre: any[] = []
     this.products.forEach(pr=>{
       pr.genre.forEach(element => {
         if(element === genre) booksByGenre.push(pr)
       });
     })
-    console.log('after', booksByGenre)
-    this.lastAdded()
-    this.getByLang('Uzbek')
   }
-  lastAdded(){
-    let newest = this.products
-    newest.sort(this.sortProduct)
-    console.log('newest', newest)
+  selectProduct(product){
+    console.log('selected', product)
+    this.cart.selectedProduct = product
+    this.navCtrl.push(ProductPage) 
   }
-  sortProduct(a,b){
-    if(a > b) return 1
-    if(a < b) return -1
-  }
-
-  getByLang(lang){
-    const byLang = this.products.filter(pr=>{
-      return pr.language === lang
-    })
-    console.log('byLang', byLang)
-  }
+  
 }

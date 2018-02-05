@@ -22,6 +22,7 @@ import { LoginPage } from '../pages/login/login';
 import { UserProvider } from '../providers/user/user';
 import { StorageProvider } from '../providers/storage/storage';
 import { DbProvider } from '../providers/db/db';
+import { ProductPage } from '../pages/product/product';
 
 const firebaseConfig = {
   apiKey: "AIzaSyARGzZ4hTAQQQ8bD4sZjuarzyawVPlRXAY",
@@ -41,7 +42,8 @@ const firebaseConfig = {
     CartPage,
     ProfilePage,
     AddProductPage,
-    LoginPage
+    LoginPage,
+    ProductPage
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ const firebaseConfig = {
     CartPage,
     ProfilePage,
     AddProductPage,
-    LoginPage
+    LoginPage,
+    ProductPage
   ],
   providers: [
     StatusBar,

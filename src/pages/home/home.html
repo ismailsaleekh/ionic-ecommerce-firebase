@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar>
+    <ion-toolbar no-border>
       <ion-buttons start>
         <button ion-button icon-only color="royal" menuToggle>
           <ion-icon name="menu"></ion-icon>
@@ -23,7 +23,7 @@
 </ion-header>
 
 <ion-content padding>
-  <div padding>
+  <div>
     <ion-slides slidesPerView="4" 
                 spaceBetween="10"
                 initialSlide="3">
@@ -34,13 +34,74 @@
       </ion-slide>
     </ion-slides>
   </div>
+
+    <p style="text-align: center;">Books in Uzbek</p>
+    <ion-card>
+      <ion-slides slidesPerView="4"
+                  spaceBetween="5">
+        <ion-slide *ngFor="let uz of uzbBooks">
+           <div class="avatar-card">
+             <ion-avatar>
+               <img src={{uz.coverURL}} alt={{uz.name}} (click)="selectProduct(uz)">
+             </ion-avatar>
+               <p>{{uz.name}}</p>
+            </div>
+          </ion-slide>
+        </ion-slides>
+      </ion-card>    
+
+      <p style="text-align: center;">Books in Russian</p>
+    <ion-card>
+      <ion-slides slidesPerView="4"
+                  spaceBetween="5">
+        <ion-slide *ngFor="let rus of rusBooks">
+           <div class="avatar-card">
+             <ion-avatar>
+               <img src={{rus.coverURL}} alt={{rus.name}} >
+             </ion-avatar>
+               <p>{{rus.name}}</p>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </ion-card>
+
+    <p style="text-align: center;">Books in English</p>
+    <ion-card>
+      <ion-slides slidesPerView="4"
+                  spaceBetween="5">
+        <ion-slide *ngFor="let eng of engBooks">
+           <div class="avatar-card">
+             <ion-avatar>
+               <img src={{eng.coverURL}} alt={{eng.name}} >
+             </ion-avatar>
+               <p>{{eng.name}}</p>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </ion-card>
+
+    <p style="text-align: center;">Foreign Books</p>
+    <ion-card>
+      <ion-slides slidesPerView="4"
+                  spaceBetween="5">
+        <ion-slide *ngFor="let foreign of foreignBooks">
+           <div class="avatar-card">
+             <ion-avatar>
+               <img src={{foreign.coverURL}} alt={{foreign.name}} >
+             </ion-avatar>
+               <p>{{foreign.name}}</p>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </ion-card>
+
   <button ion-button secondary (click)="goto('AddProductPage')">Add Product</button>
     
 </ion-content>
 
 
 <ng-template #showBtn>
-    <button ion-button icon-only color="royal" (click)="goto('LoginPage')">
+    <button ion-button icon-only color="royal" (click)="goto('LoginPage')" clear style="height: 5vh;border-radius: 10px">
         <ion-icon name="log-in"></ion-icon>
       </button>
 </ng-template>

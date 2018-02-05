@@ -38,7 +38,6 @@ export class StorageProvider {
     })
   }
   async setUser(user){
-    console.log('user is', user)
     return this.storage.set('user', user)
   }
   async setYear(){
