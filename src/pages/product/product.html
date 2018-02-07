@@ -2,14 +2,15 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{product.name}}</ion-title>
   </ion-navbar>
-
+  <div class="logo">
+    <ion-avatar>
+      <img src={{product.coverURL}} alt={{product.name}}>
+    </ion-avatar>
+  </div>
 </ion-header>
 
 
 <ion-content padding>
-  <ion-avatar>
-    <img src={{product.coverURL}} alt={{product.name}}>
-  </ion-avatar>
+  <ion-title>{{product.name}}</ion-title>  
 </ion-content>
