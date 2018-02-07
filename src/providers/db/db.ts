@@ -83,4 +83,8 @@ export class DbProvider {
     if(a > b) return 1
     if(a < b) return -1
   }
+
+  checkout(product){
+    this.db.list('/checkout/').push(product)
+  }
 }
