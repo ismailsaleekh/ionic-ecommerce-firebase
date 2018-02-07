@@ -1,7 +1,6 @@
 page-home {
-    ion-slides{
-        padding: 0 !important
-    }
+    transition: 3s;
+
     .slide button{
         height: 6vh;
         font-size: 0.75em;
@@ -11,16 +10,12 @@ page-home {
         height: 5vh;
         border-radius: 10px;
     }
-    .avatar-card p{
-        height: 100%;
-        width: 100%;
-    }
     .avatar-card img{
         height: 15vh;
         width: 100%;
         border-radius: 3px;
     }
     .avatar-card p{
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 }

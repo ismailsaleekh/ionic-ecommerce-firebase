@@ -1,42 +1,56 @@
-<ion-header>
+
+<ion-header >
     <ion-toolbar no-border>
-      <ion-buttons start>
-        <button ion-button icon-only color="royal" menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-      </ion-buttons>
-      <ion-searchbar [(ngModel)]="search"
+      <ion-grid no-padding fixed>
+        <ion-row>
+          <ion-col col-2>
+            <ion-buttons start>
+              <button ion-button icon-only color="royal" menuToggle>
+                <ion-icon name="menu"></ion-icon>
+              </button>
+            </ion-buttons>
+          </ion-col>
+          <ion-col col-8>
+            <ion-searchbar [(ngModel)]="search"
                      [showCancelButton]="true"
                      (ionInput)="onChange($event)"
                      (ionCancel)="onCancel($event)"
                      animated="true"
-                     debounce="1000">
+                     debounce="1000"
+                     color="white">
       </ion-searchbar>
-      <ion-buttons end>
-        <div *ngIf="auth.authState | async as user; else showBtn" class="avatar">
-            <ion-avatar item-end>
-                <img src={{user.photoURL}} (click)="profile()">
-              </ion-avatar>
-        </div>
-      </ion-buttons>
-  </ion-toolbar>
+          </ion-col>
+          <ion-col col-2>
+            <ion-buttons end>
+              <div *ngIf="auth.authState | async as user; else showBtn" class="avatar">
+                  <ion-avatar item-end>
+                      <img src={{user.photoURL}} (click)="profile()">
+                    </ion-avatar>
+              </div>
+            </ion-buttons>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12 [style.display]="display">
+            <ion-slides slidesPerView="4" 
+                        spaceBetween="10">
+              <ion-slide *ngFor="let genre of genres">
+                <button ion-button color="white" clear (click)="getByGenre(genre)">{{genre}}</button>                              
+              </ion-slide>
+            </ion-slides>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <div>
-    <ion-slides slidesPerView="4" 
-                spaceBetween="10"
-                initialSlide="3">
-      <ion-slide *ngFor="let genre of genres">
-        <div class="slide">
-          <button ion-button color="secondary" round (click)="getByGenre(genre)">{{genre}}</button>
-        </div>
-      </ion-slide>
-    </ion-slides>
-  </div>
-
-    <p style="text-align: center;">Books in Uzbek</p>
-    <ion-card>
+<ion-content (ionScroll)="scroll($event)">
+    <ion-card padding-bottom="10px">
+      <ion-card-header>
+        <ion-card-title>
+          <p>Books in Uzbek</p>    
+        </ion-card-title>
+      </ion-card-header>
       <ion-slides slidesPerView="4"
                   spaceBetween="5">
         <ion-slide *ngFor="let uz of uzbBooks">
@@ -45,13 +59,21 @@
                <img src={{uz.coverURL}} alt={{uz.name}} (click)="selectProduct(uz)">
              </ion-avatar>
                <p>{{uz.name}}</p>
+               <p>{{uz.price}} sum</p>
+               <button ion-button icon-only clear (click)="addToCart(uz)">
+                  <ion-icon name="cart" color="primary"></ion-icon>
+               </button>
             </div>
           </ion-slide>
         </ion-slides>
       </ion-card>    
 
-      <p style="text-align: center;">Books in Russian</p>
     <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <p>Books in Russian</p>    
+          </ion-card-title>
+        </ion-card-header>
       <ion-slides slidesPerView="4"
                   spaceBetween="5">
         <ion-slide *ngFor="let rus of rusBooks">
@@ -59,14 +81,22 @@
              <ion-avatar>
                <img src={{rus.coverURL}} alt={{rus.name}} >
              </ion-avatar>
-               <p>{{rus.name}}</p>
+             <p>{{rus.name}}</p>
+             <p>{{rus.price}} sum</p>
+             <button ion-button icon-only clear (click)="addToCart(rus)">
+                <ion-icon name="cart" color="primary"></ion-icon>
+             </button>
           </div>
         </ion-slide>
       </ion-slides>
     </ion-card>
 
-    <p style="text-align: center;">Books in English</p>
     <ion-card>
+        <ion-card-header>
+            <ion-card-title>
+              <p>Books in English</p>    
+            </ion-card-title>
+          </ion-card-header>
       <ion-slides slidesPerView="4"
                   spaceBetween="5">
         <ion-slide *ngFor="let eng of engBooks">
@@ -74,14 +104,22 @@
              <ion-avatar>
                <img src={{eng.coverURL}} alt={{eng.name}} >
              </ion-avatar>
-               <p>{{eng.name}}</p>
+             <p>{{eng.name}}</p>
+             <p>{{eng.price}} sum</p>
+             <button ion-button icon-only clear (click)="addToCart(eng)">
+                <ion-icon name="cart" color="primary"></ion-icon>
+             </button>
           </div>
         </ion-slide>
       </ion-slides>
     </ion-card>
 
-    <p style="text-align: center;">Foreign Books</p>
     <ion-card>
+        <ion-card-header>
+            <ion-card-title>
+              <p>Foreign Books</p>    
+            </ion-card-title>
+          </ion-card-header>
       <ion-slides slidesPerView="4"
                   spaceBetween="5">
         <ion-slide *ngFor="let foreign of foreignBooks">
@@ -89,7 +127,11 @@
              <ion-avatar>
                <img src={{foreign.coverURL}} alt={{foreign.name}} >
              </ion-avatar>
-               <p>{{foreign.name}}</p>
+             <p>{{foreign.name}}</p>
+             <p>{{foreign.price}} sum</p>
+             <button ion-button icon-only clear (click)="addToCart(foreign)">
+                <ion-icon name="cart" color="primary"></ion-icon>
+             </button>
           </div>
         </ion-slide>
       </ion-slides>

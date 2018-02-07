@@ -16,6 +16,7 @@ import { ProductPage } from '../product/product';
 })
 export class HomePage {
 
+  display: string = 'block'
   search
   products: any[] = []
   genres: string[] = []
@@ -45,14 +46,21 @@ export class HomePage {
     if(page == 'LoginPage')this.navCtrl.push(LoginPage)
     else if(page == 'AddProductPage')this.navCtrl.push(AddProductPage)
   }
-  addToCart(name, description, price){
-    let product = {
-      name,
-      description,
-      price
+  addToCart(product){
+    product.quantity = product.quantity || 1
+    
+    const index = this.cart.cartList.findIndex(item=>{
+      return item.key === product.key
+    })
+    if(index === -1) {
+      this.cart.addtoCart(product)
     }
-    this.cart.cartList.push(product)
-    this.events.publish('cart:added', this.cart.cartList.length)
+    else {
+      this.cart.cartList[index].quantity += 1
+      this.cart.AddToStorage(this.cart.cartList)
+      console.log(this.cart.cartList[index].quantity, 'now there are')
+    }
+    this.events.publish('cart:added', this.cart.cartList.length)    
   }
 
   async fetch(){
@@ -63,7 +71,6 @@ export class HomePage {
         this.rusBooks = rus
         this.engBooks = eng
         this.foreignBooks = foreign
-        console.log('rus', this.rusBooks)
       })
       this.events.subscribe('lastAdded', (newest)=>{
         this.newestBooks = newest
@@ -97,5 +104,12 @@ export class HomePage {
     this.cart.selectedProduct = product
     this.navCtrl.push(ProductPage) 
   }
-  
+  scroll(event){
+    if(event.directionY === 'down')this.display = 'none'
+    else this.display = 'block'
+    console.log(this.display)
+  }
+  isSimilar(item, index, arr){
+
+  }
 }
