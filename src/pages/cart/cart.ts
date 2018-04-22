@@ -28,11 +28,10 @@ export class CartPage {
     this.fetchList()
   }
 
-  fetchList(){
-    this.cart.GetFromStorage().then(data=>{
-      this.cartList = data
-      this.changeSum()
-    })
+  async fetchList(){
+    if (await this.cart.getFromStorage()) {
+      this.cartList = await this.cart.getFromStorage()
+    }
   }
 
   remove(item){
@@ -40,8 +39,7 @@ export class CartPage {
       return cart.key !== item.key
     })
     this.cart.cartList = this.cartList
-    this.cart.AddToStorage(this.cartList)
-    this.fetchList()
+    this.cart.addToStorage(this.cartList)
     this.changeSum()
     this.events.publish('cart:removed', this.cartList.length)
   }
@@ -66,12 +64,15 @@ export class CartPage {
   increase(item){
     item.quantity++
     this.changeSum()
-    this.cart.AddToStorage(this.cartList)
+    this.cart.addToStorage(this.cartList)
   }
   decrease(item){
-    item.quantity--
-    if(item.quantity === 0)this.remove(item)
+    item.quantity -= 1
+    
+    if(item.quantity <= 0) {
+      this.remove(item)
+    }
     this.changeSum()    
-    this.cart.AddToStorage(this.cartList)
+    this.cart.addToStorage(this.cartList)
   }
 }
