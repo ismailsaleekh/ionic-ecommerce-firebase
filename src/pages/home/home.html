@@ -13,10 +13,10 @@
           <ion-col col-8>
             <ion-searchbar [(ngModel)]="search"
                      [showCancelButton]="true"
-                     (ionInput)="onChange($event)"
+                     (ionInput)="onChange()"
                      (ionCancel)="onCancel($event)"
                      animated="true"
-                     debounce="1000"
+                     debounce="1500"
                      color="white">
       </ion-searchbar>
           </ion-col>
@@ -31,11 +31,11 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-12 [style.display]="display">
+          <ion-col col-12>
             <ion-slides slidesPerView="4" 
                         spaceBetween="10">
               <ion-slide *ngFor="let genre of genres">
-                <button ion-button color="white" clear (click)="getByGenre(genre)">{{genre}}</button>                              
+                <button ion-button color="white" clear (click)="getByGenre(genre.name)">{{genre.name}}</button>                              
               </ion-slide>
             </ion-slides>
           </ion-col>
@@ -44,8 +44,30 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content (ionScroll)="scroll($event)">
-    <ion-card padding-bottom="10px">
+<ion-content>
+    <ion-card padding-bottom="20px">
+        <ion-card-header>
+          <ion-card-title>
+            <p>Last added</p>    
+          </ion-card-title>
+        </ion-card-header>
+        <ion-slides slidesPerView="4"
+                    spaceBetween="5">
+          <ion-slide *ngFor="let new of newestBooks">
+             <div class="avatar-card">
+               <ion-avatar>
+                 <img src={{new.coverUrl}} alt={{new.title}} (click)="selectProduct(new)">
+               </ion-avatar>
+                 <p>{{new.title}}</p>
+                 <p>{{new.price}} UZS</p>
+                 <button ion-button icon-only clear (click)="cart.addToCart(new)">
+                    <ion-icon name="cart" color="primary"></ion-icon>
+                 </button>
+              </div>
+            </ion-slide>
+          </ion-slides>
+        </ion-card> 
+    <ion-card>
       <ion-card-header>
         <ion-card-title>
           <p>Books in Uzbek</p>    
@@ -56,11 +78,11 @@
         <ion-slide *ngFor="let uz of uzbBooks">
            <div class="avatar-card">
              <ion-avatar>
-               <img src={{uz.coverURL}} alt={{uz.name}} (click)="selectProduct(uz)">
+               <img src={{uz.coverUrl}} alt={{uz.title}} (click)="selectProduct(uz)">
              </ion-avatar>
-               <p>{{uz.name}}</p>
-               <p>{{uz.price}} sum</p>
-               <button ion-button icon-only clear (click)="addToCart(uz)">
+               <p>{{uz.title}}</p>
+               <p>{{uz.price}} UZS</p>
+               <button ion-button icon-only clear (click)="cart.addToCart(uz)">
                   <ion-icon name="cart" color="primary"></ion-icon>
                </button>
             </div>
@@ -79,11 +101,11 @@
         <ion-slide *ngFor="let rus of rusBooks">
            <div class="avatar-card">
              <ion-avatar>
-               <img src={{rus.coverURL}} alt={{rus.name}} >
+               <img src={{rus.coverUrl}} alt={{rus.title}} >
              </ion-avatar>
-             <p>{{rus.name}}</p>
-             <p>{{rus.price}} sum</p>
-             <button ion-button icon-only clear (click)="addToCart(rus)">
+             <p>{{rus.title}}</p>
+             <p>{{rus.price}} UZS</p>
+             <button ion-button icon-only clear (click)="cart.addToCart(rus)">
                 <ion-icon name="cart" color="primary"></ion-icon>
              </button>
           </div>
@@ -102,11 +124,11 @@
         <ion-slide *ngFor="let eng of engBooks">
            <div class="avatar-card">
              <ion-avatar>
-               <img src={{eng.coverURL}} alt={{eng.name}} >
+               <img src={{eng.coverUrl}} alt={{eng.title}} >
              </ion-avatar>
-             <p>{{eng.name}}</p>
-             <p>{{eng.price}} sum</p>
-             <button ion-button icon-only clear (click)="addToCart(eng)">
+             <p>{{eng.title}}</p>
+             <p>{{eng.price}} UZS</p>
+             <button ion-button icon-only clear (click)="cart.addToCart(eng)">
                 <ion-icon name="cart" color="primary"></ion-icon>
              </button>
           </div>
@@ -125,11 +147,11 @@
         <ion-slide *ngFor="let foreign of foreignBooks">
            <div class="avatar-card">
              <ion-avatar>
-               <img src={{foreign.coverURL}} alt={{foreign.name}} >
+               <img src={{foreign.coverUrl}} alt={{foreign.title}} >
              </ion-avatar>
-             <p>{{foreign.name}}</p>
-             <p>{{foreign.price}} sum</p>
-             <button ion-button icon-only clear (click)="addToCart(foreign)">
+             <p>{{foreign.title}}</p>
+             <p>{{foreign.price}} UZS</p>
+             <button ion-button icon-only clear (click)="cart.addToCart(foreign)">
                 <ion-icon name="cart" color="primary"></ion-icon>
              </button>
           </div>

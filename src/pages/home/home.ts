@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
-import { AddProductPage } from '../add-product/add-product';
-import { AngularFireDatabase } from 'angularfire2/database';
 import { CartProvider } from '../../providers/cart/cart';
 import { LoginPage } from '../login/login';
-import { StorageProvider } from '../../providers/storage/storage';
 import { DbProvider } from '../../providers/db/db';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ProfilePage } from '../profile/profile';
 import { ProductPage } from '../product/product';
+import { LoginProvider } from '../../providers/login/login';
+import { ListPage } from '../list/list';
 
 @Component({
   selector: 'page-home',
@@ -16,8 +15,7 @@ import { ProductPage } from '../product/product';
 })
 export class HomePage {
 
-  display: string = 'block'
-  search
+  search: string = ''
   products: any[] = []
   genres: string[] = []
   newestBooks: object[] = []
@@ -25,91 +23,64 @@ export class HomePage {
   rusBooks: object[] = []
   engBooks: object[] = []
   foreignBooks: object[] = []
+  photoURL: string = ''
+
   constructor(public navCtrl: NavController,
-              public db: AngularFireDatabase,
-              public cart: CartProvider,
-              public storeProvider: StorageProvider,
-              public dbProvider: DbProvider,
-              public events: Events,
-              public auth: AngularFireAuth
-  ){}
+    public cart: CartProvider,
+    public dbProvider: DbProvider,
+    public events: Events,
+    public auth: AngularFireAuth,
+    public loginProvider: LoginProvider
+  ) { }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     this.fetch()
-    this.auth.authState.subscribe((data:any)=>{
-      if(data) this.storeProvider.setUser({name: data.displayName, 
-                                           email: data.email,
-                                           photo: data.photoURL})
-    })
   }
-  goto(page){
-    if(page == 'LoginPage')this.navCtrl.push(LoginPage)
-    else if(page == 'AddProductPage')this.navCtrl.push(AddProductPage)
-  }
-  addToCart(product){
-    product.quantity = product.quantity || 1
-    
-    const index = this.cart.cartList.findIndex(item=>{
-      return item.key === product.key
-    })
-    if(index === -1) {
-      this.cart.addtoCart(product)
-    }
-    else {
-      this.cart.cartList[index].quantity += 1
-      this.cart.AddToStorage(this.cart.cartList)
-      console.log(this.cart.cartList[index].quantity, 'now there are')
-    }
-    this.events.publish('cart:added', this.cart.cartList.length)    
+  goto(page) {
+    if (page == 'LoginPage') this.navCtrl.push(LoginPage)
   }
 
-  async fetch(){
-    this.dbProvider.fetchProducts().then(data=>{
-      this.products = this.dbProvider.products
-      this.events.subscribe('byLang', (uzb, rus, eng, foreign)=>{
-        this.uzbBooks = uzb
-        this.rusBooks = rus
-        this.engBooks = eng
-        this.foreignBooks = foreign
-      })
-      this.events.subscribe('lastAdded', (newest)=>{
-        this.newestBooks = newest
-      })
-    })
-    this.dbProvider.fetchGenres().then(data=>{
-      this.genres = this.dbProvider.genres
+
+  async fetch() {
+    this.products = await this.dbProvider.fetchProducts()
+    this.genres = await this.dbProvider.fetchGenres()
+
+    this.events.subscribe('sortedProducts', ({ uzbBooks, rusBooks, engBooks, foreignBooks, lastAdded }) => {
+      this.uzbBooks = uzbBooks
+      this.rusBooks = rusBooks
+      this.engBooks = engBooks
+      this.foreignBooks = foreignBooks
+      this.newestBooks = lastAdded
     })
   }
-  onChange(event){
-    console.log('onchange', event)
-    console.log('search', this.search)
+
+  getByGenre(genre) {
+    console.log('clicked', genre)
+    this.navCtrl.push(ListPage, {
+      type: 'subject',
+      value: genre
+    })
   }
-  onCancel(event){
+  selectProduct(product) {
+    console.log('selected', product)
+    this.navCtrl.push(ProductPage, product)
+  }
+
+  isSimilar(item, index, arr) {
+  }
+
+  onChange() {
+    this.navCtrl.push(ListPage, {
+      type: 'title',
+      value: this.search
+    })
+  }
+
+  onCancel(event) {
     console.log('onClear', event)
   }
-  profile(){
-    this.navCtrl.push(ProfilePage)
-  }
-  getByGenre(genre){
-    console.log('clicked', genre) 
-    let booksByGenre: any[] = []
-    this.products.forEach(pr=>{
-      pr.genre.forEach(element => {
-        if(element === genre) booksByGenre.push(pr)
-      });
-    })
-  }
-  selectProduct(product){
-    console.log('selected', product)
-    this.cart.selectedProduct = product
-    this.navCtrl.push(ProductPage) 
-  }
-  scroll(event){
-    if(event.directionY === 'down')this.display = 'none'
-    else this.display = 'block'
-    console.log(this.display)
-  }
-  isSimilar(item, index, arr){
 
+  profile() {
+    this.navCtrl.push(ProfilePage)
   }
 }
