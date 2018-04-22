@@ -16,13 +16,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabsPage } from '../pages/tabs/tabs';
 import { CartPage } from '../pages/cart/cart';
 import { ProfilePage } from '../pages/profile/profile';
-import { AddProductPage } from '../pages/add-product/add-product';
 import { CartProvider } from '../providers/cart/cart';
 import { LoginPage } from '../pages/login/login';
-import { UserProvider } from '../providers/user/user';
-import { StorageProvider } from '../providers/storage/storage';
 import { DbProvider } from '../providers/db/db';
 import { ProductPage } from '../pages/product/product';
+import { LoginProvider } from '../providers/login/login';
+import { FavoritesProvider } from '../providers/favorites/favorites';
+import { TypeListPage } from '../pages/type-list/type-list';
+import { FavoritesPage } from '../pages/favorites/favorites';
 
 const firebaseConfig = {
   apiKey: "AIzaSyARGzZ4hTAQQQ8bD4sZjuarzyawVPlRXAY",
@@ -41,9 +42,10 @@ const firebaseConfig = {
     TabsPage,
     CartPage,
     ProfilePage,
-    AddProductPage,
     LoginPage,
-    ProductPage
+    ProductPage,
+    TypeListPage,
+    FavoritesPage
   ],
   imports: [
     BrowserModule,
@@ -59,21 +61,22 @@ const firebaseConfig = {
     MyApp,
     HomePage,
     ListPage,
-    TabsPage,    
+    TabsPage,
     CartPage,
     ProfilePage,
-    AddProductPage,
     LoginPage,
-    ProductPage
+    ProductPage,
+    TypeListPage,
+    FavoritesPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     CartProvider,
-    UserProvider,
-    StorageProvider,
     DbProvider,
+    LoginProvider,
+    FavoritesProvider,
   ]
 })
-export class AppModule {}
+export class AppModule { }
