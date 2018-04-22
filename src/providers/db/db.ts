@@ -6,85 +6,89 @@ import { Events } from 'ionic-angular';
 export class DbProvider {
 
   products: any[] = []
-  genres: string[] = []
-  authors: string[] = []
-  uzbBooks: object[] = []
-  rusBooks: object[] = []
-  engBooks: object[] = []
-  foreignBooks: object[] = []
   newestBooks: object[] = []
+  genres: any[] = []
+  authors: any[] = []
+
   constructor(public db: AngularFireDatabase,
-              public events: Events
-  ) {}
-  async fetchProducts(){
-    this.db.list('/products/').snapshotChanges().subscribe((data:any)=>{
-      data.forEach(product=>{
-        let pr = {
-          key: product.key,
-          name: product.payload.val().name,
-          description: product.payload.val().description,
-          price: product.payload.val().price,
-          addedTime: product.payload.val().addedTime,
-          author: product.payload.val().author,
-          coverURL: product.payload.val().coverUrl,
-          language: product.payload.val().language,
-          year: product.payload.val().year,
-          genre: product.payload.val().genre
-        }
-      this.products.push(pr)
+    public events: Events
+  ) {
+    this.fetchGenres()
+    this.fetchAuthors()
+   }
+
+  async fetchProducts() {
+    if (this.products.length > 0) {
+      return this.products
+    } else {
+      await this.db.list('/products/').snapshotChanges().subscribe((data: any) => {
+        data.forEach(product => {
+          const pr = product.payload.val()
+          pr.key = product.key
+          this.products.push(pr)
+        })
+        this.sortProducts(this.products)
       })
-      this.getByLang(this.products)
-      this.lastAdded(this.newestBooks)
-    })
+      return this.products        
+    } 
   }
 
-  async fetchGenres(){
-    this.genres = []
-    this.db.list('/genres/').snapshotChanges().subscribe((data:any)=>{
-      data.forEach(element => {
-        this.genres.push(element.payload.val().genreName)
-      });
-      console.log('provider', this.genres)
-    })
-    return this.genres
-  }
-  async fetchAuthors(){
-    this.authors = []
-    this.db.list('/authors/').snapshotChanges().subscribe((data:any)=>{
-      data.forEach(element => {
-        this.authors.push(element.payload.val().authorName)
-      });
-    })
-    return this.authors
+  async fetchGenres() {
+    if (this.genres.length > 0) {
+      return this.genres
+    } else {
+        const genres = []
+        await this.db.list('/genres/').snapshotChanges().subscribe((data: any) => {
+          data.forEach(element => {
+            genres.push(element.payload.val())
+          });
+        })
+        this.genres = genres
+        return genres
+      }
   }
 
-  getByLang(list){
-    this.uzbBooks = list.filter(pr=>{
+  async fetchAuthors() {
+    if (this.authors.length > 0) {
+      return this.authors
+    } else {
+      const authors = []
+    await this.db.list('/authors/').snapshotChanges().subscribe((data: any) => {
+      data.forEach(element => {
+        authors.push(element.payload.val())
+      });
+    })
+    this.authors = authors
+
+    return authors
+    }   
+    
+  }
+
+  sortProducts(list) {
+    const uzbBooks = list.filter(pr => {
       return pr.language === "Uzbek"
     })
-    this.rusBooks = list.filter(pr=>{
+    const rusBooks = list.filter(pr => {
       return pr.language === "Russian"
     })
-    this.engBooks = list.filter(pr=>{
+    const engBooks = list.filter(pr => {
       return pr.language === "English"
     })
-    this.foreignBooks = list.filter(pr=>{
+    const foreignBooks = list.filter(pr => {
       return pr.language === "Foreign"
     })
-    this.events.publish('byLang', this.uzbBooks, this.rusBooks, this.engBooks, this.foreignBooks)
+    const lastAdded = list
+    lastAdded.sort(this.comparisor)
+    this.events.publish('sortedProducts', { uzbBooks, rusBooks, engBooks, foreignBooks, lastAdded })
   }
 
-  lastAdded(list){
-    list = this.products
-    list.sort(this.sortProduct)  
-    this.events.publish('lastAdded', list)
-  }
-  sortProduct(a,b){
-    if(a > b) return 1
-    if(a < b) return -1
+  comparisor(a, b) {
+    if (a > b) return 1
+    if (a < b) return -1
   }
 
-  checkout(product){
+  checkout(product) {
     this.db.list('/checkout/').push(product)
   }
 }
