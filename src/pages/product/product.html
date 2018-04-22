@@ -2,15 +2,44 @@
 <ion-header>
 
   <ion-navbar>
+    <ion-title>
+      {{product?.title}}
+    </ion-title>
   </ion-navbar>
-  <div class="logo">
-    <ion-avatar>
-      <img src={{product.coverURL}} alt={{product.name}}>
-    </ion-avatar>
-  </div>
 </ion-header>
 
 
 <ion-content padding>
-  <ion-title>{{product.name}}</ion-title>  
+  <ion-card>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-5>
+              <img src={{product?.coverUrl}} alt={{product?.title}}>
+          </ion-col>
+          <ion-col col-7>
+            <p><b>Author:</b> {{product?.creator}}</p>
+            <p><b>Publisher:</b> {{product?.publisher}}</p>
+            <p><b>Year:</b> {{product?.year}}</p>
+            <p><b>Price:</b> {{product?.price}} UZS</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-card-title>
+        <p><b>{{product?.title}}</b></p>
+      </ion-card-title>
+      <br>
+      <p>Size: {{product?.size}}</p>
+      <p>ISBN: {{product?.id}}</p>
+      <hr>
+      <p>{{product.description}}</p>
+      <button ion-button clear *ngIf="!inFav" (click)="favoritesProvider.addToFav(product)">
+        <span>Add to favorites   <ion-icon name="star-outline"></ion-icon></span>
+      </button>
+
+      <button ion-button clear *ngIf="inFav" (click)="favoritesProvider.addToFav(product)">
+        Already in favorites<ion-icon name="star"></ion-icon>
+      </button>       
+    </ion-card-content>
+  </ion-card> 
 </ion-content>
