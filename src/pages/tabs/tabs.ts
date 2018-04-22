@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { CartPage } from '../cart/cart';
-import { ProfilePage } from '../profile/profile';
 import { CartProvider } from '../../providers/cart/cart';
 import { Observable } from 'rxjs/Observable';
+import { FavoritesPage } from '../favorites/favorites';
 
 @IonicPage()
 @Component({
@@ -15,8 +15,9 @@ export class TabsPage {
 
   tab1Root = HomePage;
   tab2Root = CartPage;
-  tab3Root = ProfilePage;
-  badge: Observable<number>
+  tab3Root = FavoritesPage;
+  cartBadge: Observable<number>
+  favBadge: Observable<number>
   
 
   constructor(public navCtrl: NavController, 
@@ -25,10 +26,16 @@ export class TabsPage {
               public events: Events
               ) {
                 events.subscribe('cart:added', length=>{
-                  this.badge = length
+                  this.cartBadge = length
                 })
                 events.subscribe('cart:removed', length=>{
-                  this.badge = length
+                  this.cartBadge = length
+                })
+                events.subscribe('fav:added', length => {
+                  this.favBadge = length
+                })
+                events.subscribe('fav:removed', length => {
+                  this.favBadge = length
                 })
               }
 
