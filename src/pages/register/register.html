@@ -27,7 +27,12 @@
       <ion-input type="password" [(ngModel)]="user.password"></ion-input>
     </ion-item>
     <br>
-    <button ion-button block medium round outline (click)="showAlert()">Register! </button>
+
+    <button ion-button block large round outline (click)="showAlert()">Register! </button>
+    <br>
+    <button ion-button block small outline round (click)="goBack()">Back to login</button>
+
+
   </ion-list>
 
 </ion-content>

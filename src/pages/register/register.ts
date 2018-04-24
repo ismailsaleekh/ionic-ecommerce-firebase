@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { LoginProvider } from '../../providers/login/login';
 import { LoginPage } from '../login/login';
 
@@ -15,7 +15,8 @@ export class RegisterPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private alertCtrl: AlertController,
-    private loginProvider: LoginProvider
+    private loginProvider: LoginProvider,
+    private viewCtrl: ViewController
   ) { }
 
   ionViewDidLoad() {
@@ -33,5 +34,9 @@ export class RegisterPage {
     alert.present()
 
     this.navCtrl.setRoot(LoginPage)
+  }
+
+  goBack() {
+    this.viewCtrl.dismiss()
   }
 }

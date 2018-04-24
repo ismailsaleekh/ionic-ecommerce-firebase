@@ -23,7 +23,7 @@ export class CheckoutPage {
   ionViewDidLoad() {
     this.totalSum = this.navParams.get('totalSum')
     this.auth.authState.subscribe(data => {
-      if (data.displayName) {
+      if (data) {
         this.user.name = data.displayName
         this.user.email = data.email
         console.log(this.user)
