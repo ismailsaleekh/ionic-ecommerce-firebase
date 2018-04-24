@@ -1,0 +1,39 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Checkout</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <h1>
+        <b>Total sum: </b>{{totalSum}} UZS</h1>
+    </ion-list-header>
+    <br>
+    <form #form="ngForm" (ngSubmit)="checkout()">
+      <ion-item>
+        <ion-label fixed>Name: </ion-label>
+        <ion-input type="text" name="name" [(ngModel)]="user.name" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed>Email: </ion-label>
+        <ion-input type="text" name="email" [(ngModel)]="user.email" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed>Phone number: </ion-label>
+        <ion-input type="text" name="phone" [(ngModel)]="user.phone" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed>Adress: </ion-label>
+        <ion-input type="text" name="address" [(ngModel)]="user.address" required></ion-input>
+      </ion-item>
+    <br>
+      <button ion-button clear type="submit" small block color="custom">< Back</button>    
+      <button *ngIf="form.valid" type="submit" large ion-button clear color="custom" block>Checkout!</button>      
+    </form>
+  </ion-list>
+</ion-content>

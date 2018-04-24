@@ -1,19 +1,60 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Sign In </ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
 
-<ion-content class="card-background-page">
 
-  <ion-card>
-      <button ion-button icon-left round (click)="facebook()">
+<ion-content padding>
+
+  <ion-list>
+    <img src="../../assets/imgs/logo.png" style="width: 60%; height: 60%; margin-left: auto; margin-right: auto;display: block">
+
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="mail"></ion-icon> Email</ion-label>
+      <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>
+        <ion-icon name="lock"></ion-icon> Password</ion-label>
+      <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+    </ion-item>
+    <br>
+    <a (click)="showModal()">Do not have an account? </a>
+    <p *ngIf="message" style="color: rgba(194, 24, 24, 0.815)">{{message}}</p>
+    <br>
+    <button ion-button block medium round outline (click)="loginProvider.signInWithEmail(user.email, user.password)">Sign In </button>
+
+    <br>
+
+  </ion-list>
+  <ion-card-title padding>Or sign in with: </ion-card-title>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        <button small clear ion-button icon-left round (click)="loginProvider.signInWithSocial('Facebook')">
           <ion-icon name="facebook"></ion-icon>
           Facebook
         </button>
-        <button ion-button icon-left round (click)="google()">
+      </ion-col>
+      <ion-col col-4>
+        <button small clear ion-button icon-left round (click)="loginProvider.signInWithSocial('Google')">
           <ion-icon name="google"></ion-icon>
           Google
         </button>
-        <button ion-button icon-left round>
+      </ion-col>
+      <ion-col col-4>
+        <button small clear ion-button icon-left round (click)="loginProvider.signInWithSocial('Twitter')">
           <ion-icon name="twitter"></ion-icon>
           Twitter
         </button>
-  </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

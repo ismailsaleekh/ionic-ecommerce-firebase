@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AngularFireAuth } from 'angularfire2/auth';
-import firebase from 'firebase';
-import { UserProvider } from '../../providers/user/user';
+import { IonicPage, NavController, ModalController } from 'ionic-angular';
+import { LoginProvider } from '../../providers/login/login';
+import { HomePage } from '../home/home';
+import { RegisterPage } from '../register/register';
 
 
 @IonicPage()
@@ -12,41 +12,32 @@ import { UserProvider } from '../../providers/user/user';
 })
 export class LoginPage {
 
+  message: string = ''
+  user: any = {}
+
   constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              public auth: AngularFireAuth,
-              public userProvider: UserProvider
-            ) {
+    public loginProvider: LoginProvider,
+    private modalCtrl: ModalController
+  ) {
+    loginProvider.isAuth.subscribe(data => {
+      if (data) {
+        navCtrl.push(HomePage)
+      }
+    })
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
-
-  google(){
-    this.auth.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider())
-    .then((data:any)=>{
-      this.userProvider.user = {
-        name : data.user.displayName,
-        email: data.user.email,
-        photo: data.user.photoURL
+    this.loginProvider.loginFailed.subscribe(data => {
+      if (data) {
+        this.message = data
+      } else {
+        this.message = ''
       }
-      console.log(this.userProvider.user)
     })
   }
-  facebook(){
-    this.auth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
-      .then((data:any)=>{
-        this.userProvider.user = {
-          name : data.user.displayName,
-          email: data.user.email,
-          photo: data.user.photoURL
-        }
-        console.log(this.userProvider.user)
-      })
-      .catch(err=>{
-        console.info('error', err)
-      })
-  }
 
+  showModal() {
+    let modal = this.modalCtrl.create(RegisterPage)
+    modal.present()
+  }
 }

@@ -1,15 +1,15 @@
 <ion-header>
   <ion-navbar>
+    <ion-title>{{value}}</ion-title>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of list">
+    <button ion-item *ngFor="let item of list" (click)="goToProduct(item)">
       <ion-avatar item-start>
         <img src="{{item.coverUrl}}">
       </ion-avatar>

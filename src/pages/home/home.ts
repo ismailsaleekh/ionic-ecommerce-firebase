@@ -8,6 +8,7 @@ import { ProfilePage } from '../profile/profile';
 import { ProductPage } from '../product/product';
 import { LoginProvider } from '../../providers/login/login';
 import { ListPage } from '../list/list';
+import { FavoritesProvider } from '../../providers/favorites/favorites';
 
 @Component({
   selector: 'page-home',
@@ -30,7 +31,8 @@ export class HomePage {
     public dbProvider: DbProvider,
     public events: Events,
     public auth: AngularFireAuth,
-    public loginProvider: LoginProvider
+    public loginProvider: LoginProvider,
+    private favsProvider: FavoritesProvider
   ) { }
 
   ionViewDidEnter() {
@@ -62,11 +64,7 @@ export class HomePage {
     })
   }
   selectProduct(product) {
-    console.log('selected', product)
     this.navCtrl.push(ProductPage, product)
-  }
-
-  isSimilar(item, index, arr) {
   }
 
   onChange() {

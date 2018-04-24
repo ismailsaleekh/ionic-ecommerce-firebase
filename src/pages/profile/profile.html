@@ -8,12 +8,16 @@
 </ion-header>
 
 
-<ion-content padding>
-    <ion-avatar item-end>
-        <img src={{user.photo}}>
-  </ion-avatar>
-
-  <h1>Hello {{user.name}}</h1>
-
-  <button ion-button (click)="logout()" round>Log out</button>
+<ion-content>
+    <ion-card class="background" padding>
+        <div><h2 text-center><b>{{user.name}}</b></h2></div>
+        <br>
+        <img src={{user.photoUrl}} style="width: 40%; height: 40%; margin-left: auto; margin-right: auto;display: block; border-radius: 40px">
+        <br>
+        <div *ngIf="user.email"><p><b>Email: </b>{{user?.email}}</p></div>
+        <button ion-button clear block (click)="goTo('Favorites')">Favorites List</button>
+        <button ion-button clear block (click)="goTo('Cart')">Cart List</button>
+        <button ion-button clear block (click)="logout()" round>Log out</button>
+      </ion-card>  
+    <br>
 </ion-content>

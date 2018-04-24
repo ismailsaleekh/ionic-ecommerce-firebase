@@ -24,6 +24,8 @@ import { LoginProvider } from '../providers/login/login';
 import { FavoritesProvider } from '../providers/favorites/favorites';
 import { TypeListPage } from '../pages/type-list/type-list';
 import { FavoritesPage } from '../pages/favorites/favorites';
+import { RegisterPage } from '../pages/register/register';
+import { CheckoutPage } from '../pages/checkout/checkout';
 
 const firebaseConfig = {
   apiKey: "AIzaSyARGzZ4hTAQQQ8bD4sZjuarzyawVPlRXAY",
@@ -45,7 +47,9 @@ const firebaseConfig = {
     LoginPage,
     ProductPage,
     TypeListPage,
-    FavoritesPage
+    FavoritesPage,
+    RegisterPage,
+    CheckoutPage
   ],
   imports: [
     BrowserModule,
@@ -67,7 +71,9 @@ const firebaseConfig = {
     LoginPage,
     ProductPage,
     TypeListPage,
-    FavoritesPage
+    FavoritesPage,
+    RegisterPage,
+    CheckoutPage
   ],
   providers: [
     StatusBar,

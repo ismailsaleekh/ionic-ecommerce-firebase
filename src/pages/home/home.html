@@ -32,10 +32,12 @@
         </ion-row>
         <ion-row>
           <ion-col col-12>
-            <ion-slides slidesPerView="4" 
+            <ion-slides slidesPerView="3" 
                         spaceBetween="10">
               <ion-slide *ngFor="let genre of genres">
-                <button ion-button color="white" clear (click)="getByGenre(genre.name)">{{genre.name}}</button>                              
+                <div style="width: 100%; overflow: hidden;">
+                  <button ion-button color="white" clear (click)="getByGenre(genre.name)">{{genre.name}}</button>                              
+                </div>
               </ion-slide>
             </ion-slides>
           </ion-col>
@@ -58,10 +60,12 @@
                <ion-avatar>
                  <img src={{new.coverUrl}} alt={{new.title}} (click)="selectProduct(new)">
                </ion-avatar>
-                 <p>{{new.title}}</p>
-                 <p>{{new.price}} UZS</p>
+               <div style="height: 10vh; overflow: hidden;">
+                <p>{{new.title}}</p>
+                <p><b>{{new.price}} UZS</b></p>
+              </div> 
                  <button ion-button icon-only clear (click)="cart.addToCart(new)">
-                    <ion-icon name="cart" color="primary"></ion-icon>
+                    <ion-icon name="cart" color="custom"></ion-icon>
                  </button>
               </div>
             </ion-slide>
@@ -80,10 +84,12 @@
              <ion-avatar>
                <img src={{uz.coverUrl}} alt={{uz.title}} (click)="selectProduct(uz)">
              </ion-avatar>
-               <p>{{uz.title}}</p>
-               <p>{{uz.price}} UZS</p>
+             <div style="height: 10vh; overflow: hidden;">
+                <p>{{uz.title}}</p>
+                <p><b>{{uz.price}} UZS</b></p>
+              </div> 
                <button ion-button icon-only clear (click)="cart.addToCart(uz)">
-                  <ion-icon name="cart" color="primary"></ion-icon>
+                  <ion-icon name="cart" color="custom"></ion-icon>
                </button>
             </div>
           </ion-slide>
@@ -101,12 +107,14 @@
         <ion-slide *ngFor="let rus of rusBooks">
            <div class="avatar-card">
              <ion-avatar>
-               <img src={{rus.coverUrl}} alt={{rus.title}} >
+               <img src={{rus.coverUrl}} alt={{rus.title}} (click)="selectProduct(rus)">
              </ion-avatar>
-             <p>{{rus.title}}</p>
-             <p>{{rus.price}} UZS</p>
+             <div style="height: 10vh; overflow: hidden;">
+                <p>{{rus.title}}</p>
+                <p><b>{{rus.price}} UZS</b></p>
+              </div> 
              <button ion-button icon-only clear (click)="cart.addToCart(rus)">
-                <ion-icon name="cart" color="primary"></ion-icon>
+                <ion-icon name="cart" color="custom"></ion-icon>
              </button>
           </div>
         </ion-slide>
@@ -124,12 +132,14 @@
         <ion-slide *ngFor="let eng of engBooks">
            <div class="avatar-card">
              <ion-avatar>
-               <img src={{eng.coverUrl}} alt={{eng.title}} >
+               <img src={{eng.coverUrl}} alt={{eng.title}} (click)="selectProduct(eng)">
              </ion-avatar>
-             <p>{{eng.title}}</p>
-             <p>{{eng.price}} UZS</p>
+             <div style="height: 10vh; overflow: hidden;">
+                <p>{{eng.title}}</p>
+                <p><b>{{eng.price}} UZS</b></p>
+              </div> 
              <button ion-button icon-only clear (click)="cart.addToCart(eng)">
-                <ion-icon name="cart" color="primary"></ion-icon>
+                <ion-icon name="cart" color="custom"></ion-icon>
              </button>
           </div>
         </ion-slide>
@@ -147,19 +157,19 @@
         <ion-slide *ngFor="let foreign of foreignBooks">
            <div class="avatar-card">
              <ion-avatar>
-               <img src={{foreign.coverUrl}} alt={{foreign.title}} >
+               <img src={{foreign.coverUrl}} alt={{foreign.title}} (click)="selectProduct(foreign)" >
              </ion-avatar>
-             <p>{{foreign.title}}</p>
-             <p>{{foreign.price}} UZS</p>
+             <div style="height: 10vh; overflow: hidden;">
+                <p>{{foreign.title}}</p>
+                <p><b>{{foreign.price}} UZS</b></p>
+              </div> 
              <button ion-button icon-only clear (click)="cart.addToCart(foreign)">
-                <ion-icon name="cart" color="primary"></ion-icon>
+                <ion-icon name="cart" color="custom"></ion-icon>
              </button>
           </div>
         </ion-slide>
       </ion-slides>
     </ion-card>
-
-  <button ion-button secondary (click)="goto('AddProductPage')">Add Product</button>
     
 </ion-content>
 
@@ -169,10 +179,3 @@
         <ion-icon name="log-in"></ion-icon>
       </button>
 </ng-template>
-
-
-
-<!-- <button ion-item (click)="addToCart(product.name, product.description, product.price)">
-    <ion-icon name="cart"></ion-icon>
-    {{product.name}}
-  </button> -->

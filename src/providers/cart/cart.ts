@@ -28,7 +28,7 @@ export class CartProvider {
       this.events.publish('cart:added', list.length)
       return list
     } else {
-      return null
+      return []
     }
   }
 

@@ -22,18 +22,18 @@
           <p item-end>Quantity: {{item.quantity}}</p>
         </ion-item>
         <ion-item-options side="right">
-          <button ion-button color="primary" icon-only clear (click)="increase(item)">
+          <button ion-button color="custom" icon-only clear (click)="increase(item)">
             <ion-icon name="add-circle"></ion-icon>
           </button>
-          <button ion-button color="danger" icon-only clear (click)="decrease(item)">
+          <button ion-button color="custom" icon-only clear (click)="decrease(item)">
             <ion-icon name="remove-circle"></ion-icon>
           </button>
         </ion-item-options>
         <ion-item-options side="left">
-          <button ion-button color="primary" icon-only clear (click)="checkout(item)">
+          <button ion-button color="custom" icon-only clear (click)="checkout(item)">
             <ion-icon name="cash"></ion-icon>
           </button>
-          <button ion-button color="danger" icon-only clear (click)="remove(item)">
+          <button ion-button color="custom" icon-only clear (click)="remove(item)">
             <ion-icon name="trash"></ion-icon>
           </button>
         </ion-item-options>
@@ -46,7 +46,7 @@
 </ion-content>
 
 <ion-footer>
-    <ion-toolbar>
-      <label padding>Total sum is: {{totalSum}}</label>
+    <ion-toolbar color="white">
+      <label padding><h6><b>Total sum: </b>{{totalSum}}</h6> </label>
     </ion-toolbar>
 </ion-footer>

@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FavoritesProvider } from '../../providers/favorites/favorites';
+import { ProductPage } from '../product/product';
 
-/**
- * Generated class for the FavoritesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -15,11 +11,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class FavoritesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public favList: any[] = []
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public favProvider: FavoritesProvider
+) { }
+
+  async ionViewDidLoad() {
+    this.favList = await this.favProvider.getFromStorage()
+    console.log(this.favList)
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad FavoritesPage');
+  goToProduct(product) {
+    this.navCtrl.push(ProductPage, product)
   }
 
+  remove(product) {
+    this.favList = this.favList.filter(item => {
+      return item.key !== product.key
+    })
+    this.favProvider.setToStorage(this.favList)
+  }
 }
